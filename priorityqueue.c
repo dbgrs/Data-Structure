@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 
 #define MAX 10
@@ -5,95 +6,104 @@
 int queue[MAX];
 int priority[MAX];
 
-int size = 0;
+int front = -1;
+int rear = -1;
 
-// Insert an element
-void insert()
+// Add process to priority queue
+void enqueue(int process, int p)
 {
-    int value, p;
     int i;
 
-    if (size == MAX)
+    if (rear == MAX - 1)
     {
         printf("Priority Queue is full!\n");
-        return;
     }
-
-    printf("Enter process number: ");
-    scanf("%d", &value);
-
-    printf("Enter priority: ");
-    scanf("%d", &p);
-
-    i = size;
-
-    // Higher priority number comes first
-    while (i > 0 && priority[i - 1] < p)
+    else
     {
-        queue[i] = queue[i - 1];
-        priority[i] = priority[i - 1];
-        i--;
+        if (front == -1)
+            front = 0;
+
+        i = rear + 1;
+
+        // Higher priority number comes first
+        while (i > front && priority[i - 1] < p)
+        {
+            queue[i] = queue[i - 1];
+            priority[i] = priority[i - 1];
+            i--;
+        }
+
+        queue[i] = process;
+        priority[i] = p;
+
+        rear++;
+
+        printf("Process P%d added to priority queue.\n", process);
     }
-
-    queue[i] = value;
-    priority[i] = p;
-
-    size++;
-
-    printf("Process P%d inserted successfully.\n", value);
 }
 
-// Delete the highest-priority element
-void delete()
+// Remove highest-priority process
+void dequeue()
 {
     int i;
 
-    if (size == 0)
+    if (front == -1 || front > rear)
     {
         printf("Priority Queue is empty!\n");
-        return;
     }
-
-    printf("Process P%d with priority %d removed.\n",
-           queue[0], priority[0]);
-
-    for (i = 0; i < size - 1; i++)
+    else
     {
-        queue[i] = queue[i + 1];
-        priority[i] = priority[i + 1];
-    }
+        printf("Process P%d with priority %d removed.\n",
+               queue[front], priority[front]);
 
-    size--;
+        for (i = front; i < rear; i++)
+        {
+            queue[i] = queue[i + 1];
+            priority[i] = priority[i + 1];
+        }
+
+        rear--;
+
+        if (front > rear)
+        {
+            front = -1;
+            rear = -1;
+        }
+    }
 }
 
-// Display the queue
+// Display processes
 void display()
 {
     int i;
 
-    if (size == 0)
+    if (front == -1)
     {
         printf("Priority Queue is empty!\n");
-        return;
     }
-
-    printf("\nProcess\tPriority\n");
-
-    for (i = 0; i < size; i++)
+    else
     {
-        printf("P%d\t%d\n", queue[i], priority[i]);
+        printf("\nProcesses in priority queue:\n");
+        printf("Process\tPriority\n");
+
+        for (i = front; i <= rear; i++)
+        {
+            printf("P%d\t%d\n", queue[i], priority[i]);
+        }
     }
 }
 
 int main()
 {
     int choice;
+    int process;
+    int p;
 
     while (1)
     {
         printf("\n--- PRIORITY QUEUE ---\n");
-        printf("1. Insert Process\n");
-        printf("2. Delete Process\n");
+        printf("1. Add Process\n");
+        printf("2. Remove Process\n");
         printf("3. Display Queue\n");
         printf("4. Exit\n");
 
@@ -102,11 +112,17 @@ int main()
 
         if (choice == 1)
         {
-            insert();
+            printf("Enter process number: ");
+            scanf("%d", &process);
+
+            printf("Enter priority: ");
+            scanf("%d", &p);
+
+            enqueue(process, p);
         }
         else if (choice == 2)
         {
-            delete();
+            dequeue();
         }
         else if (choice == 3)
         {
