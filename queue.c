@@ -7,7 +7,7 @@ int front = -1;
 int rear = -1;
 
 
-void insert()
+void Enqueue()
 {
     int value;
 
@@ -30,7 +30,7 @@ void insert()
 }
 
 
-void delete()
+void Dequeue()
 {
     int value;
 
@@ -120,11 +120,11 @@ int main()
         switch (choice)
         {
             case 1:
-                insert();
+                Enqueue();
                 break;
 
             case 2:
-                delete();
+                Dequeue();
                 break;
 
             case 3:
