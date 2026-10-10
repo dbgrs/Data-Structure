@@ -6,7 +6,7 @@ int queue[MAX];
 int front = -1;
 int rear = -1;
 
-void insert()
+void enqueue()
 {
     int num;
 
@@ -35,7 +35,7 @@ void insert()
 }
 
 
-void delete()
+void dequeue()
 {
     int val;
 
@@ -151,11 +151,11 @@ int main()
 		switch(choice)
 		{	
 			case 1:
-				insert();
+				enqueue();
 				break;
 
 			case 2:
-				delete();
+				dequeue();
 				break;
 
 			case 3:
