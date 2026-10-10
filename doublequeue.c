@@ -102,83 +102,149 @@ void Delete2()
 	}
 }
 
-void Display()
-{	
-	int i;
-
-	if(front == -1)
-	{
-		printf("\n Dequeue is underflow");
-		return;
-	}
-
-	printf("\n Dequeue : ");
-
-	i = front;
-
-	while(1)
-	{
-		printf("%d", dequeue[i]);
-
-		if(i==rear)
-		{
-			break;
-		}
-
-		i=(i+1)%MAX;
-	}
-
-	printf("\n");
-}
-
-void modify()
+void Display1()
 {
-    int pos, value, i, count;
+    int i;
 
-    if (front == -1)
+    if(front == -1)
     {
-        printf("\nDequeue is empty");
+        printf("\nQueue1 is empty!");
         return;
     }
 
-    printf("\nEnter position : ");
+    printf("\nQueue1: ");
+
+    i = front;
+
+    while(1)
+    {
+        printf("%d ", dequeue[i]);
+
+        if (i == rear)
+            break;
+
+        i = (i + 1) % MAX;
+    }
+
+    printf("\n");
+}
+
+void Display2()
+{
+    int i;
+
+    if(front == -1)
+    {
+        printf("\nQueue2 is empty!");
+        return;
+    }
+
+    printf("\nQueue2: ");
+
+    i = rear;
+
+    while(1)
+    {
+        printf("%d ", dequeue[i]);
+
+        if(i == front)
+            break;
+
+        i = (i - 1 + MAX) % MAX;
+    }
+
+    printf("\n");
+}
+
+void Modify1()
+{
+    int pos, value, i, count;
+
+    if(front == -1)
+    {
+        printf("\nQueue1 is empty!");
+        return;
+    }
+
+    printf("\nEnter position from front: ");
     scanf("%d", &pos);
 
-    if (pos <= 0 || pos > MAX)
+    if(pos <= 0)
     {
-        printf("\nInvalid position");
+        printf("\nInvalid position!");
         return;
     }
 
     i = front;
     count = 1;
 
-    while (1)
+    while(1)
     {
-        if (count == pos)
+        if(count == pos)
         {
-            printf("\nEnter new value : ");
+            printf("\nEnter new value: ");
             scanf("%d", &value);
 
             dequeue[i] = value;
 
-            printf("\nValue modified successfully");
+            printf("\nValue modified successfully!");
             return;
         }
 
-        if (i == rear)
-        {
+        if(i == rear)
             break;
-        }
 
         i = (i + 1) % MAX;
         count++;
     }
 
-    printf("\nInvalid position");
+    printf("\nInvalid position!");
 }
 
+void Modify2()
+{
+    int pos, value, i, count;
 
+    if(front == -1)
+    {
+        printf("\nQueue2 is empty!");
+        return;
+    }
+
+    printf("\nEnter position from rear: ");
+    scanf("%d", &pos);
+
+    if(pos <= 0)
+    {
+        printf("\nInvalid position!");
+        return;
+    }
+
+    i = rear;
+    count = 1;
+
+    while(1)
+    {
+        if(count == pos)
+        {
+            printf("\nEnter new value: ");
+            scanf("%d", &value);
+
+            dequeue[i] = value;
+
+            printf("\nValue modified successfully!");
+            return;
+        }
+
+        if(i == front)
+            break;
+
+        i = (i - 1 + MAX) % MAX;
+        count++;
+    }
+
+    printf("\nInvalid position!");
+}
 
 int main()
 {
@@ -192,9 +258,11 @@ int main()
 		printf("\n 2. Insert Rear");
 		printf("\n 3. Delete Front");
 		printf("\n 4. Delete Rear");
-		printf("\n 5. Display");
-		printf("\n 6. Modify");
-		printf("\n 7. Exit");
+		printf("\n 5. Display1");
+		printf("\n 6. Display2");
+		printf("\n 7. Modify1");
+		printf("\n 8. Modify2");
+		printf("\n 9. Exit");
 
 		printf("\n Enter Choice ");
 		scanf("%d", &choice);
@@ -222,14 +290,21 @@ int main()
 				break;
 
 			case 5:
-				Display();
+				Display1();
 				break;
 
 			case 6:
-				modify();
+				Display2();
+
+			case 7:
+				Modify1();
+				break;
+
+			case 8:
+				Modify2();
 				break;
 			
-			case 7:
+			case 9:
 				return 0;
 
 
