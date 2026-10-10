@@ -100,6 +100,64 @@ void display2(void)
     }
 }
 
+// Modify Stack 1
+
+void modifystack1()
+{
+    int pos, value;
+
+    if(top1 == -1)
+    {
+        printf("\nStack 1 is empty!");
+        return;
+    }
+
+    printf("\nEnter position to modify: ");
+    scanf("%d", &pos);
+
+    if(pos < 1 || pos > top1 + 1)
+    {
+        printf("\nInvalid position!");
+        return;
+    }
+
+    printf("\nEnter new value: ");
+    scanf("%d", &value);
+
+    stack[pos - 1] = value;
+
+    printf("\nValue modified successfully in Stack 1.");
+}
+
+// Modify Stack 2
+
+void modifystack2()
+{
+    int pos, value;
+
+    if(top2 == MAX)
+    {
+        printf("\nStack 2 is empty!");
+        return;
+    }
+
+    printf("\nEnter position to modify: ");
+    scanf("%d", &pos);
+
+    if(pos < 1 || pos > MAX - top2)
+    {
+        printf("\nInvalid position!");
+        return;
+    }
+
+    printf("\nEnter new value: ");
+    scanf("%d", &value);
+
+    stack[MAX - pos] = value;
+
+    printf("\nValue modified successfully in Stack 2.");
+}
+
 // Main
 int main(void)
 {
@@ -115,7 +173,9 @@ int main(void)
         printf("\n4. Pop Stack 2");
         printf("\n5. Display Stack 1");
         printf("\n6. Display Stack 2");
-        printf("\n7. Exit");
+		printf("\n7. Modify Stack 1");
+		printf("\n8. Modify Stack 2");
+        printf("\n9. Exit");
 
 
         printf("\nEnter your choice: ");
@@ -151,14 +211,21 @@ int main(void)
                 display2();
                 break;
 
-            case 7:
+			case 7:
+				modifystack1();
+				break;
+
+			case 8:
+				modifystack2();
+				break;
+
+            case 9:
                 return 0;
 
             default:
-                printf("\nInvalid choice! Please enter 1 to 7.");
+                printf("\nInvalid choice! Please enter 1 to 9.");
         }
     }
 
     return 0;
 }
-
