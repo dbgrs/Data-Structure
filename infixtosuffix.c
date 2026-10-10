@@ -1,100 +1,88 @@
 #include <stdio.h>
+#include <ctype.h>
 
-char stack[50];
+#define MAX 10
+
+char stack[MAX];
 int top = -1;
 
-void push(char x)
-{
-    top++;
-    stack[top] = x;
+
+void push(char ch) {
+    stack[++top] = ch;
 }
 
-char pop()
-{
-    char x;
-    x = stack[top];
-    top--;
-    return x;
+
+char pop() {
+    return stack[top--];
 }
 
-int priority(char x)
-{
-    if (x == '+' || x == '-')
-        return 1;
 
-    if (x == '*' || x == '/')
-        return 2;
-
-    if (x == '^')
+int precedence(char ch) {
+    if (ch == '^')
         return 3;
-
-    return 0;
+    else if (ch == '*' || ch == '/')
+        return 2;
+    else if (ch == '+' || ch == '-')
+        return 1;
+    else
+        return 0;
 }
 
-int main()
-{
-    char infix[50], postfix[50];
+int main() {
+    char infix[MAX], postfix[MAX];
     int i = 0, j = 0;
-    char x;
+    char ch;
 
-    printf("Enter infix expression: ");
+    printf("Enter Infix Expression: ");
     scanf("%s", infix);
 
-    while (infix[i] != '\0')
-    {
-        x = infix[i];
+    while (infix[i] != '\0') {
 
-        if ((x >= 'A' && x <= 'Z') ||
-            (x >= 'a' && x <= 'z') ||
-            (x >= '0' && x <= '9'))
-        {
-            postfix[j] = x;
-            j++;
+        ch = infix[i];
+
+
+        if (isalnum(ch)) {
+            postfix[j++] = ch;
         }
 
-        else if (x == '(')
-        {
-            push(x);
+
+        else if (ch == '(') {
+            push(ch);
         }
 
-        else if (x == ')')
-        {
-            while (stack[top] != '(')
-            {
-                postfix[j] = pop();
-                j++;
+
+        else if (ch == ')') {
+
+            while (top != -1 && stack[top] != '(') {
+                postfix[j++] = pop();
             }
 
-            pop();   
+            pop(); 
         }
 
 
-        else
-        {
+        else {
+
             while (top != -1 &&
-                   stack[top] != '(' &&
-                   priority(stack[top]) >= priority(x))
-            {
-                postfix[j] = pop();
-                j++;
+                   precedence(stack[top]) >= precedence(ch)) {
+
+                postfix[j++] = pop();
             }
 
-            push(x);
+            push(ch);
         }
 
         i++;
     }
 
 
-    while (top != -1)
-    {
-        postfix[j] = pop();
-        j++;
+    while (top != -1) {
+        postfix[j++] = pop();
     }
 
     postfix[j] = '\0';
 
-    printf("Postfix expression = %s ", postfix);
+    printf("Postfix Expression: %s", postfix);
 
     return 0;
 }
