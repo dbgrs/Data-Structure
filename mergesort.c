@@ -61,7 +61,7 @@ void mergesort(int a[], int low, int high)
 
 void main()
 {
-	int a[100], n, i;
+	int a[5], n, i;
 
 	printf("Enter total size of number : ");
 	scanf("%d", &n);
